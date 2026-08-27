@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Context English</title>
+<style>
+:root{--bg:#f7f3ed;--paper:#fffdf9;--ink:#292725;--muted:#77716a;--line:#ded7cd;--accent:#8b7560}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC",sans-serif}
+button{font:inherit} .app{max-width:1050px;margin:auto;min-height:100vh;padding:28px 22px 60px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px}
+.logo{font-family:Georgia,serif;font-size:25px}.tag{color:var(--muted);font-size:13px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:0 8px 30px #4b403010}
+.hero{display:grid;grid-template-columns:1.4fr .8fr;gap:20px}.hero h1{font:48px/1.05 Georgia,serif;margin:8px 0 14px}.hero p{color:var(--muted);line-height:1.8}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.pill{border:1px solid var(--line);background:transparent;padding:9px 15px;border-radius:999px;cursor:pointer}.pill.active{background:var(--ink);color:white;border-color:var(--ink)}
+.primary{border:0;background:var(--ink);color:white;padding:13px 20px;border-radius:12px;cursor:pointer}.secondary{border:1px solid var(--line);background:white;padding:12px 18px;border-radius:12px;cursor:pointer}
+.stat{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);color:var(--muted)}.stat strong{color:var(--ink)}
+.reading{display:none;max-width:850px;margin:auto}.reading h2{font:36px Georgia,serif;margin-bottom:8px}.meta{color:var(--muted);font-size:13px}.article{font:20px/2 Georgia,"Times New Roman",serif;margin-top:30px}.word{border-bottom:2px solid #b8a38d;cursor:pointer}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.modal{display:none;position:fixed;inset:0;background:#00000035;align-items:flex-end;justify-content:center;padding:15px}.modal.show{display:flex}.wordcard{background:var(--paper);width:min(680px,100%);max-height:82vh;overflow:auto;border-radius:24px;padding:25px}.wordhead{display:flex;justify-content:space-between}.wordhead h3{font:34px Georgia,serif;margin:0}.close{border:0;background:none;font-size:25px;cursor:pointer}.section{padding:14px 0;border-bottom:1px solid var(--line)}.section h4{margin:0 0 8px}.muted{color:var(--muted)}.choice{display:block;width:100%;text-align:left;margin:8px 0;padding:13px;border:1px solid var(--line);border-radius:10px;background:white;cursor:pointer}
+@media(max-width:700px){.app{padding:20px 16px}.hero{grid-template-columns:1fr}.hero h1{font-size:40px}.card{padding:21px}.article{font-size:19px}.reading h2{font-size:31px}}
+
+.quiz{display:none;position:fixed;inset:0;background:#00000035;align-items:center;justify-content:center;padding:15px}.quiz.show{display:flex}.quizcard{background:var(--paper);width:min(680px,100%);border-radius:24px;padding:28px}.quiztext{font:24px/1.6 Georgia,serif;margin:24px 0}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="logo">Context English</div><div class="tag">Read it. Meet it. Remember it.</div></header>
+
+<section id="home">
+<div class="hero">
+<div class="card">
+<div class="muted">今天，不背单词。</div>
+<h1>只读一个故事。</h1>
+<p>把四级词汇放进真实场景里。遇到单词就点击它：先理解语境，再探索词义、词根、近义词和搭配。</p>
+<h3>今日新词数量</h3>
+<div class="controls" id="countControls">
+<button class="pill" data-count="5">5</button><button class="pill active" data-count="10">10</button><button class="pill" data-count="15">15</button><button class="pill" data-count="20">20</button><button class="pill" data-count="30">30</button><button class="pill" data-count="50">50</button>
+</div>
+<button class="primary" onclick="startReading()">开始阅读 →</button>
+</div>
+<div class="card">
+<h3>今天的状态</h3>
+<div class="stat"><span>今日新词</span><strong id="todayCount">10</strong></div>
+<div class="stat"><span>已遇见</span><strong id="seen">0</strong></div>
+<div class="stat"><span>已熟悉</span><strong id="known">0</strong></div>
+<p class="muted" style="line-height:1.7;margin-top:18px">没有倒计时，没有补课惩罚。今天累了，就少学一点。</p>
+</div>
+</div>
+</section>
+
+<section id="reading" class="reading">
+<button class="secondary" onclick="goHome()">← 返回</button>
+<div class="card" style="margin-top:15px">
+<div class="meta">CHAPTER 01 · A NEW BEGINNING</div>
+<h2>Leaving Home</h2>
+<div class="meta">A small story about choosing a new direction.</div>
+<div class="article">
+<p>After years of studying in her hometown, Lily decided to <span class="word" data-word="pursue">pursue</span> a new opportunity abroad.</p>
+<p>She knew that moving to another country would not be easy. She had to <span class="word" data-word="adapt">adapt</span> to a different culture, <span class="word" data-word="manage">manage</span> her time carefully, and <span class="word" data-word="overcome">overcome</span> many challenges.</p>
+<p>At first, everything seemed unfamiliar. Slowly, she <span class="word" data-word="establish">established</span> new friendships and learned how to <span class="word" data-word="maintain">maintain</span> a balance between study and personal life.</p>
+<p>She still felt nervous sometimes, but each small experience helped her become more <span class="word" data-word="independent">independent</span>. She began to see uncertainty not as a wall, but as an <span class="word" data-word="opportunity">opportunity</span> to grow.</p>
+</div>
+<div class="actions"><button class="secondary" onclick="test()">读完了，来一道语境题 →</button></div>
+<div class="card" style="margin-top:18px">
+<div class="meta">CHAPTER 02 · THE FIRST WEEK</div>
+<h2 style="font:30px Georgia,serif">Finding Her Place</h2>
+<div class="article">
+<p>During her first week, Lily had to <span class="word" data-word="adjust">adjust</span> to a new schedule. The small differences in daily life were sometimes <span class="word" data-word="confusing">confusing</span>, but she slowly became more <span class="word" data-word="confident">confident</span>.</p>
+<p>One afternoon, a classmate invited her to a student club. Lily was unsure at first, but she decided to <span class="word" data-word="participate">participate</span>. By the end of the meeting, she had <span class="word" data-word="discover">discovered</span> that making friends was easier when she stopped worrying about making mistakes.</p>
+</div>
+</div>
+
+</div>
+</section>
+</div>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
+<div class="wordcard">
+<div class="wordhead"><div><div class="muted">VOCABULARY</div><h3 id="wtitle"></h3></div><button class="close" onclick="closeModal()">×</button></div>
+<div id="wbody"></div>
+<div class="actions">
+<button class="secondary" onclick="markWord('known')">✓ 我认识</button>
+<button class="secondary" onclick="markWord('fuzzy')">🤔 有点模糊</button>
+<button class="secondary" onclick="markWord('forgot')">× 我忘了</button>
+</div>
+</div>
+</div>
+
+<script>
+const data={
+pursue:{pron:"/pərˈsuː/",meaning:"追求；寻求",extra:"追求一个目标、机会或事业。",root:"来自拉丁语 persequi，含有“跟随、追逐”的概念。",syn:"seek：寻找；chase：追赶；pursue：持续追求目标。",coll:"pursue a dream · pursue a career · pursue further study"},
+adapt:{pron:"/əˈdæpt/",meaning:"适应",extra:"也可表示改编、使适合某种情况。",root:"ad-（toward）+ apt（fit），可理解为“使自己变得适合”。",syn:"adjust：调整；adapt：适应新环境；accommodate：迁就、适应需求。",coll:"adapt to a new culture · adapt to change · adapt quickly"},
+manage:{pron:"/ˈmænɪdʒ/",meaning:"管理；设法做到",extra:"manage to do sth = 设法成功做成某事。",root:"源自意大利语 maneggiare，与 handle/用手处理有关。",syn:"handle：处理；control：控制；manage：组织、处理并让事情运转。",coll:"manage time · manage a team · manage to finish"},
+overcome:{pron:"/ˌoʊvərˈkʌm/",meaning:"克服；战胜",extra:"常用于困难、恐惧、问题等。",root:"over（超过）+ come（来、到达），可理解为“跨过去”。",syn:"defeat：击败；conquer：战胜；overcome：克服困难或障碍。",coll:"overcome difficulties · overcome fear · overcome challenges"},
+establish:{pron:"/ɪˈstæblɪʃ/",meaning:"建立；确立",extra:"也可表示证实、确定。",root:"来自拉丁语 stabilis，与 stable（稳定的）同源概念有关。",syn:"build：建立；found：创办；establish：正式建立或确立。",coll:"establish a relationship · establish a system · establish a reputation"},
+maintain:{pron:"/meɪnˈteɪn/",meaning:"维持；保持",extra:"还可表示保养、维护；坚称。",root:"main + tain 的现代词形来自拉丁语 tenere（hold，保持、拿住）。",syn:"keep：保持；preserve：保存原状；sustain：使持续；retain：保留。",coll:"maintain a balance · maintain a relationship · maintain standards"},
+independent:{pron:"/ˌɪndɪˈpendənt/",meaning:"独立的",extra:"independent of = 不依赖于；也可指独立组织或个人。",root:"in-（not）+ dependent（依赖的）。",syn:"self-reliant：自立的；autonomous：自治的；independent：不依赖他人。",coll:"independent thinking · financially independent · independent study"},
+opportunity:{pron:"/ˌɑːpərˈtuːnəti/",meaning:"机会；时机",extra:"通常指有利于实现某事的机会。",root:"来自拉丁语 opportunus，有“顺风、合适”的意思。",syn:"chance：机会；possibility：可能性；opportunity：有利的机会。",coll:"a great opportunity · job opportunity · opportunity to learn"}
+};
+Object.assign(data,{
+adjust:{pron:"/əˈdʒʌst/",meaning:"调整；适应",extra:"在这里指调整自己的生活节奏以适应新的安排。",root:"ad-（toward）与 juxta（near）相关，有“使接近、使合适”的概念。",syn:"adapt：适应新环境；modify：修改；adjust：小幅调整。",coll:"adjust to a new schedule · adjust your plans"},
+confusing:{pron:"/kənˈfjuːzɪŋ/",meaning:"令人困惑的",extra:"描述让人不知道该如何理解或处理的事物。",root:"来自 confuse，源自拉丁语 confundere（混合、搅在一起）。",syn:"unclear：不清楚的；puzzling：令人费解的；confusing：让人困惑的。",coll:"confusing instructions · confusing situation"},
+confident:{pron:"/ˈkɑːnfɪdənt/",meaning:"自信的；有把握的",extra:"这里表示对自己的能力逐渐有信心。",root:"来自拉丁语 confidere，核心概念是 trust（相信）。",syn:"certain：确定的；assured：有把握的；confident：对自己或结果有信心。",coll:"feel confident · confident about · confident in"},
+participate:{pron:"/pɑːrˈtɪsɪpeɪt/",meaning:"参加；参与",extra:"强调成为活动的一部分，而不只是到场。",root:"与 part（部分）相关，核心概念是“成为其中一部分”。",syn:"join：加入；attend：出席；participate：参与活动或过程。",coll:"participate in a discussion · participate in activities"},
+discover:{pron:"/dɪˈskʌvər/",meaning:"发现；发觉",extra:"通过经历或探索发现以前未知的事实。",root:"dis- + cover，可理解为“揭开覆盖物”。",syn:"find：找到；notice：注意到；discover：发现以前未知的事物。",coll:"discover a new place · discover that · discover the truth"}
+});
+let current="",count=10;
+document.querySelectorAll("[data-count]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-count]").forEach(x=>x.classList.remove("active"));b.classList.add("active");count=+b.dataset.count;document.getElementById("todayCount").textContent=count});
+document.querySelectorAll(".word").forEach(el=>el.onclick=()=>openWord(el.dataset.word));
+function openWord(w){current=w;let d=data[w]||data.establish;document.getElementById("wtitle").textContent=w;document.getElementById("wbody").innerHTML=`<div class="section"><h4>${d.pron}</h4><div><b>当前语境：</b>${d.meaning}</div><p class="muted">在这句话里，它强调的是：${d.extra}</p></div><div class="section"><h4>词根 / 词源</h4><div>${d.root}</div></div><div class="section"><h4>近义词辨析</h4><div>${d.syn}</div></div><div class="section"><h4>常见搭配</h4><div>${d.coll}</div></div><div class="section"><h4>⭐ CET-4</h4><div>适合四级阅读语境学习。重点记“核心画面”，不要强迫自己一次记住所有中文释义。</div></div>`;document.getElementById("modal").classList.add("show");let n=+(localStorage.seen||0)+1;localStorage.seen=n;document.getElementById("seen").textContent=n}
+function closeModal(){document.getElementById("modal").classList.remove("show")}
+function markWord(type){if(type==="known"){let n=+(localStorage.known||0)+1;localStorage.known=n;document.getElementById("known").textContent=n}closeModal()}
+function startReading(){document.getElementById("home").style.display="none";document.getElementById("reading").style.display="block";window.scrollTo(0,0)}
+function goHome(){document.getElementById("reading").style.display="none";document.getElementById("home").style.display="block";window.scrollTo(0,0)}
+function test(){
+  const questions=[
+    ["After moving abroad, Lily had to ______ to a different culture.","adapt","adapt","overcome","maintain","obtain"],
+    ["She wanted to ______ a balance between study and personal life.","maintain","maintain","pursue","abandon","decline"],
+    ["Lily decided to ______ further study in another country.","pursue","manage","pursue","establish","retain"],
+    ["She learned to ______ her time carefully.","manage","manage","adapt","preserve","contribute"],
+    ["Every small challenge helped her ______ her fear of the unfamiliar.","overcome","maintain","overcome","establish","seek"]
+  ];
+  let q=questions[Math.floor(Math.random()*questions.length)];
+  let opts=[q[2],q[3],q[4],q[5]].sort(()=>Math.random()-.5);
+  document.getElementById("quizTitle").textContent="语境测试";
+  document.getElementById("quizText").textContent=q[0];
+  const box=document.getElementById("quizOptions"); box.innerHTML="";
+  opts.forEach(o=>{let b=document.createElement("button");b.className="choice";b.textContent=o;b.onclick=()=>{
+    box.innerHTML=`<div class="section"><h4>${o===q[1]?"✓ 答对了":"再想想"}</h4><div>${o===q[1]?"这个词在这里的意思是："+data[o].meaning:"正确答案是 "+q[1]+"。"+(data[q[1]]?data[q[1]].meaning:"")}</div></div><button class="primary" onclick="closeQuiz()">继续阅读</button>`;
+  };box.appendChild(b)});
+  document.getElementById("quiz").classList.add("show");
+}
+function closeQuiz(){document.getElementById("quiz").classList.remove("show")}
+document.getElementById("seen").textContent=localStorage.seen||0;document.getElementById("known").textContent=localStorage.known||0;
+</script>
+
+<div class="quiz" id="quiz">
+  <div class="quizcard">
+    <div class="muted">CONTEXT CHECK</div>
+    <h2 id="quizTitle" style="font:32px Georgia,serif">语境测试</h2>
+    <div class="quiztext" id="quizText"></div>
+    <div id="quizOptions"></div>
+    <button class="secondary" onclick="closeQuiz()">先不做</button>
+  </div>
+</div>
+</body>
+</html>
